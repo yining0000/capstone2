@@ -1,52 +1,20 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import Payment from "./pages/Payment";
 
 const App = () => {
-  const [products, setProducts] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  useEffect(() => {
-    axios.get("http://localhost:5000/products")
-      .then(response => {
-        console.log("Fetched products:", response.data);
-        setProducts(response.data);
-      })
-      .catch(error => console.error("Error fetching products:", error));
-  }, []);
-
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
-
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
   return (
-    <div>
-      <h1>GreatGold Marketplace</h1>
-      <div>
-        <input
-          type="text"
-          placeholder="Search products"
-          value={searchQuery}
-          onChange={handleSearchChange}
-        />
-      </div>
-      {filteredProducts.length > 0 ? (
-        <ul>
-          {filteredProducts.map((item) => (
-            <li key={item._id}>
-              <img src={item.image} alt={item.name} width="100" />
-              <h2>{item.name}</h2>
-              <p>{item.price}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Loading products...</p>
-      )}
-    </div>
+    <Router>
+      <nav className="p-4 bg-gray-200">
+        <Link to="/" className="mr-4">Home</Link>
+        <Link to="/payment">Payment</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/payment" element={<Payment />} />
+      </Routes>
+    </Router>
   );
 };
 

@@ -1,68 +1,90 @@
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
+  color: #213547;
+  background-color: #f8f8f8;
   text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* Body Layout */
 body {
   margin: 0;
+  padding: 0;
   display: flex;
-  place-items: center;
-  min-width: 320px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   min-height: 100vh;
 }
 
+/* Header */
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 3em;
+  font-weight: bold;
+  color: #d4af37;
 }
 
+/* Search Box */
+.search-box {
+  width: 50%;
+  padding: 12px;
+  border: 2px solid #d4af37;
+  border-radius: 8px;
+  font-size: 1em;
+  transition: all 0.3s ease-in-out;
+}
+.search-box:focus {
+  border-color: #ffd700;
+  outline: none;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+/* Product Cards */
+.product-card {
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+.product-card:hover {
+  transform: scale(1.02);
+}
+.product-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+}
+
+/* Buttons */
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  border: none;
+  padding: 10px 20px;
   font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  font-weight: bold;
+  background: linear-gradient(135deg, #ffd700, #ffb700);
+  color: white;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.3s ease-in-out;
 }
 button:hover {
-  border-color: #646cff;
+  background: linear-gradient(135deg, #ffb700, #ffd700);
+  transform: scale(1.05);
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+button:focus {
+  outline: none;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2em;
   }
-  a:hover {
-    color: #747bff;
+  .search-box {
+    width: 80%;
   }
-  button {
-    background-color: #f9f9f9;
+  .product-card {
+    width: 90%;
   }
 }
+
