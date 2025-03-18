@@ -1,15 +1,38 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const { NlpManager } = require("node-nlp");
 require("dotenv").config();
 
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: "http://localhost:5173"  // Ensure this matches your frontend
+  origin: "http://localhost:5173"  
 }));
 
-// ✅ Default Route (Fixes "Cannot GET /" issue)
+// NLP Manager for handling chatbot logic
+const manager = new NlpManager({ languages: ['en'] });
+(async () => {
+    manager.addDocument('en', 'hello', 'greetings.hello');
+    manager.addDocument('en', 'goodbye', 'greetings.bye');
+    manager.addDocument('en', 'what products do you have', 'products.list');
+
+    manager.addAnswer('en', 'greetings.hello', 'Hello! How can I help you today?');
+    manager.addAnswer('en', 'greetings.bye', 'Goodbye, have a great day!');
+    manager.addAnswer('en', 'products.list', 'We offer a variety of products, please visit our products page for more information.');
+
+    await manager.train();
+    manager.save();
+})();
+
+// Chatbot endpoint
+app.post("/chatbot", async (req, res) => {
+    const { text } = req.body;
+    const response = await manager.process('en', text);
+    return res.json({ response: response.answer });
+});
+
+// ✅ Default Route
 app.get("/", (req, res) => {
   res.send("GreatGold API is running!");
 });
